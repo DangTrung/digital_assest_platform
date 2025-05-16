@@ -1,0 +1,6 @@
+<%if @purchase_items.empty?%>
+    <%=render 'empty_item'%>
+<%else%>
+    <%=render 'item'%>
+    <%=render 'total_item'%>
+<%end%>

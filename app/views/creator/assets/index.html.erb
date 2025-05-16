@@ -1,0 +1,28 @@
+<h1>All Assets</h1>
+
+<%= link_to 'New Asset', new_creator_asset_path, class: 'btn btn-primary' %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @assets.each do |asset| %>
+      <tr>
+        <td><%= asset.title %></td>
+        <td><%= asset.description %></td>
+        <td><%= asset.price %></td>
+        <td>
+          <%= link_to 'Show', creator_asset_path(asset), class: 'btn btn-info' %>
+          <%= link_to 'Edit', edit_creator_asset_path(asset), class: 'btn btn-warning' %>
+          <%= link_to 'Delete', creator_asset_path(asset), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

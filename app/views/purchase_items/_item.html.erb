@@ -1,0 +1,81 @@
+<!-- Banner Section -->
+<div class="container banner">
+  <div class="row">
+    <div class="col-12 p-0">
+      <div class="img d-flex justify-content-center align-items-center">
+        <h1 class="font-weight-bold pt-5 pb-3 text-primary text-uppercase font-lg pointer animate__animated animate__fadeInDown">
+          Your Cart
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Content -->
+<div class="container content">
+  <div class="row mb-5">
+    <div class="col-12 animate__animated animate__fadeInLeft">
+      <table class="table table-bordered">
+        <thead class="thead-dark text-center text-uppercase">
+          <tr>
+            <th>Action</th>
+            <th>Asset</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody class="text-center">
+          <% @purchase.purchase_items.includes(:asset).each do |item| %>
+            <tr>
+              <!-- Remove item -->
+              <td>
+                <%= link_to purchase_item_path(item.asset_id), method: :delete, class: "text-danger text-decoration-none" do %>
+                  <i class="fas fa-times-circle"></i>
+                <% end %>
+              </td>
+
+              <!-- Asset Info -->
+              <td>
+                <div class="product d-flex">
+                  <div class="info text-left">
+                    <h6 class="text-primary font-weight-bold text-uppercase mb-0">
+                      <%= item.asset.title %>
+                    </h6>
+                  </div>
+                </div>
+              </td>
+
+              <!-- Price -->
+              <td class="text-success font-weight-bold">
+                $<%= number_with_precision(item.asset.price, precision: 2) %>
+              </td>
+
+              <!-- Quantity Form -->
+              <td>
+                <%= form_with model: PurchaseItem.new, remote: true, class: "d-flex justify-content-center align-items-center" do |f| %>
+                  <%= f.hidden_field :asset_id, value: item.asset_id %>
+                  <%= f.number_field :quantity, value: item.quantity, class: "form-control text-center w-50" %>
+                  <%= f.button :submit, class: "btn btn-primary ml-2" do %>
+                    <i class="fas fa-check"></i>
+                  <% end %>
+                <% end %>
+              </td>
+
+              <!-- Total Price -->
+              <td class="text-success font-weight-bold">
+                $<%= number_with_precision(item.asset.price * item.quantity, precision: 2) %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <hr class="border">
+    </div>
+
+    <!-- Footer Actions -->
+    <div class="col-12 d-flex justify-content-between">
+      <%= link_to "Continue Shopping", customer_assets_path, class: "btn btn-secondary rounded-0 font-weight-bold animate__animated animate__fadeInLeft" %>
+    </div>
+  </div>
+</div>

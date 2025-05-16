@@ -1,0 +1,32 @@
+<div class="container cart-total">
+  <div class="row justify-content-end mb-5">
+    <div class="col-md-5 card pb-4 pt-2 animate__animated animate__fadeInUp">
+      <h4 class="m-0 font-weight-bold text-secondary border-bottom p-3">Cart Summary</h4>
+
+      <!-- Subtotal -->
+      <div class="total d-flex justify-content-between align-items-center p-3 border-bottom">
+        <h5 class="m-0 text-secondary font-weight-bold">Subtotal</h5>
+        <h5 class="m-0 text-success font-weight-bold">
+          $<%= number_with_precision(total_price, precision: 2, delimiter: ',') %>
+        </h5>
+      </div>
+
+      <!-- Tax (included) -->
+      <div class="total d-flex justify-content-between align-items-center p-3 border-bottom">
+        <h5 class="m-0 text-secondary font-weight-bold">Tax (Included)</h5>
+        <h5 class="m-0 text-success font-weight-bold">10%</h5>
+      </div>
+
+      <!-- Total -->
+      <div class="total d-flex justify-content-between align-items-center p-3 border-bottom">
+        <h5 class="m-0 text-secondary font-weight-bold">Total</h5>
+        <h5 class="m-0 text-success font-weight-bold">
+          $<%= number_with_precision(total_price, precision: 2, delimiter: ',') %>
+        </h5>
+      </div>
+
+      <!-- Checkout button -->
+      <%= link_to "Proceed to Checkout", check_outs_path, class: "btn btn-block btn-primary mt-3 font-weight-bold rounded-0" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,101 @@
+<title>Digital Asset Platform</title>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+
+    <!-- Left: Auth Links -->
+    <div class="d-flex align-items-center">
+      <% if user_signed_in? %>
+        <%= link_to edit_user_registration_path, class: "text-white me-3 d-flex align-items-center" do %>
+          <i class="fas fa-user me-1"></i> Profile
+        <% end %>
+        <%= button_to "Sign Out", destroy_user_session_path,
+                      method: :delete,
+                      class: "btn btn-link text-white p-0 me-3",
+                      form: {data: { confirm: "Are you sure you want to sign out?" } } %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path, class: "text-white me-3" %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "text-white" %>
+      <% end %>
+    </div>
+
+    <!-- Center: App Name -->
+    <div class="text-white fw-bold text-uppercase">
+      Digital Asset Platform
+    </div>
+    <% if user_signed_in? %>
+    <!-- Right: User Dropdown and Cart -->
+      <div class="d-flex align-items-center">
+        <div class="dropdown me-3 btn btn-white rounded shadow bg-success">
+          <a class="nav-link dropdown-toggle text-white d-flex align-items-center" href="#" id="userDropdown"
+             role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="far fa-user-circle fa-lg me-2"></i>
+            <small class="font-italic text-white"><%= current_user.name %></small>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li>
+              <%= link_to edit_user_registration_path(current_user), class: "dropdown-item bg-darkmaroon" do %>
+                <i class="fas fa-user fa-sm me-2 text-white"></i> Edit Profile
+              <% end %>
+            </li>
+          </ul>
+        </div>
+        <!-- Cart Button -->
+        <button type="button" class="btn btn-white rounded shadow bg-success me-3" data-bs-toggle="modal" data-bs-target="#cartModal">
+          <i class="fas fa-shopping-bag fa-lg"></i>
+          <small class="font-italic text-white"><%= current_purchase&.purchase_items&.count %></small>
+        </button>
+      </div>
+    <% end %>
+  </div>
+</nav>
+
+  <!-- 🛒 Cart Modal -->
+<% if user_signed_in? && current_purchase.persisted? %>
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content border-orange bg-darkmaroon rounded-0">
+
+        <div class="modal-header bg-orange justify-content-center border-bottom">
+          <h5 class="modal-title text-black font-italic" id="cartModalLabel">My Cart</h5>
+        </div>
+
+        <div class="modal-body">
+          <% if current_purchase.purchase_items.any? %>
+            <% current_purchase.purchase_items.includes(:asset).each do |item| %>
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <div>
+                  <h6 class="m-0 text-orange font-italic"><%= item.asset.title %></h6>
+                  <small>$<%= number_with_precision(item.asset.price, precision: 2) %></small>
+                </div>
+                <%= button_to purchase_item_path(item.asset_id),
+                              method: :delete,
+                              remote: true,
+                              class: "btn btn-sm btn-outline-danger",
+                              form: {data: { confirm: 'Are you sure?', disable_with: 'Removing...' } } do %>
+                          Remove
+                <% end %>
+              </div>
+              <hr class="border-orange">
+            <% end %>
+          <% else %>
+            <p class="text-center text-muted mb-0">Your cart is empty.</p>
+          <% end %>
+        </div>
+
+        <div class="modal-footer justify-content-between border-top">
+          <%= link_to purchase_item_path(current_purchase),
+                      class: "text-decoration-none d-flex align-items-center" do %>
+            <i class="fas fa-shopping-cart me-2"></i>
+            <span class="font-italic">View Cart</span>
+          <% end %>
+          <button type="button" class="btn btn-outline-secondary rounded-0 font-italic" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<% end %>
+

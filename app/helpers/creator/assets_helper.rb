@@ -1,0 +1,2 @@
+module Creator::AssetsHelper
+end
