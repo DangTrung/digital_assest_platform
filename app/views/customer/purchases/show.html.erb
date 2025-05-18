@@ -1,4 +1,4 @@
-<% assets = %>
+<% assets = @assets%>
 <div class="container justify-content-center">
   <h1 class="mb-4 text-center">Available Assets</h1>
   <div class="row d-flex">
@@ -6,16 +6,10 @@
       <div class="col-md-4 mb-4">
         <div class="card shadow-sm h-100">
           <div class="h-75">
-            <%= render 'asset', asset: asset%>
+            <%= render "customer/assets/asset", asset: asset%>
           </div>
           <div class="card-footer bg-transparent border-top-0 h-25">
-            <%= form_with url: quick_add_purchase_items_path, method: :post, remote: true, class: "d-inline" do |f| %>
-              <%= f.hidden_field :quantity, value: 1 %>
-              <%= f.hidden_field :asset_id, value: asset.id %>
-              <%= f.button :submit, class: "btn btn-outline-orange w-100" do %>
-                <i class="fas fa-shopping-bag"></i> Add to Purchase
-              <% end %>
-            <% end %>
+            Dowload
           </div>
         </div>
       </div>

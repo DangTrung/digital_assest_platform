@@ -7,6 +7,7 @@ class Customer::PurchasesController < ApplicationController
   end
 
   def show
+    @assets = @purchase.assets
   end
 
   private
@@ -16,7 +17,7 @@ class Customer::PurchasesController < ApplicationController
   end
 
   def load_purchase
-    @purchases = current_user.purchases
+    @purchases = current_user.purchases.where(payable: true)
     return if @purchases
 
     flash[:danger] = "Your Purchase is empty !"

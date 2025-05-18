@@ -30,7 +30,7 @@ module Api
                 join assets a on pi.asset_id = a.id
                 join users u on a.user_id = u.id
               where
-                u.role = 1
+                u.role = 1 and p.payable = true
               group by
                 u.id
               order by

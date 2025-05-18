@@ -7,6 +7,24 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+User.create!(
+    name: "Admin1",
+    email: "admin1@example.com",
+    password: "123456789",
+    role: 0
+  )
+User.create!(
+    name: "creator1",
+    email: "creator1@example.com",
+    password: "123456789",
+    role: 1
+  )
+User.create!(
+    name: "customer1",
+    email: "customer1@example.com",
+    password: "123456789",
+    role: 2
+  )
 20.times do |i|
   email = "user#{i + 1}@example.com"
   next if User.exists?(email: email)
@@ -26,4 +44,5 @@ end
     user_id: rand(1..20)
   )
 end
+
 
