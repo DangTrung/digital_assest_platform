@@ -1,0 +1,32 @@
+<% purchase_items = purchase.purchase_items %>
+<% total_price = total_price(purchase_items) %>
+<div class="col-6 bg-none border rounded shadow">
+	<div class="m-3 border">
+	    <h4 class="m-0 text-primary text-center p-3">YOUR PURCHASE</h4>
+	    <div class="product p-3">
+	    	<div class="product-items d-flex justify-content-between mb-1">
+		        <h6 class="m-0 text-dark">Asset's Names</h6>
+		        <p class="m-0  text-dark">Quantity</p>
+		        <p class="m-0  text-dark">Price</p>
+		    </div>
+	    	<% purchase_items.each do |item|%>
+	        <div class="d-flex justify-content-between mb-1">
+            <h6 class="m-0 text-secondary"><%= item.asset.title %></h6>
+            <p class="m-0 font-italic"><%=item.quantity%></p>
+            <p class="m-0 font-italic"><%= number_with_delimiter(item.asset.price) %> VND</p>
+	        </div>
+	      <%end%>
+	    </div>
+	    <div class="subtotal d-flex justify-content-between align-items-center p-3 border-bottom">
+	        <h6 class="m-0 text-secondary font-italic">SUBTOTAL</h6>
+	        <p class="m-0 font-italic"><%= number_with_delimiter(total_price)%> VND</p>
+	    </div>
+	    <div class="total d-flex justify-content-between align-items-center p-3 border-bottom">
+	        <h6 class="m-0 text-secondary font-italic">TOTAL</h6>
+	        <p class="m-0 font-italic"><%= number_with_delimiter(total_price)%> VND</p>
+	    </div>
+	    <div class="p-3 d-flex justify-content-center align-self-center">
+	    	<%= link_to 'View Purchase Details', customer_purchase_path(purchase), class: "btn btn-primary mt-3 rounded border shadow-md" %>
+	    </div>
+    </div>
+</div>

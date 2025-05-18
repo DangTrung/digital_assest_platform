@@ -1,0 +1,2 @@
+module Customer::PurchasesHelper
+end

@@ -1,8 +1,5 @@
 class PurchaseItemsController < ApplicationController
-  before_action :authenticate_user!
-  # before_action :require_customer!
-  before_action :set_current_purchase
-
+  before_action :authenticate_user!, :require_customer!, :set_current_purchase
   def create
     asset_id = purchase_item_params[:asset_id].to_i
     quantity = purchase_item_params[:quantity].to_i
@@ -11,14 +8,14 @@ class PurchaseItemsController < ApplicationController
 
     if existing_item
       existing_item.update(quantity: quantity)
-      flash[:success] = "Updated quantity in your cart"
+      flash[:success] = "Updated quantity in your Purchase"
     else
       @purchase_item = @purchase.purchase_items.new(asset_id: asset_id, quantity: quantity)
       if @purchase.save && @purchase_item.save
         session[:purchase_id] = @purchase.id
-        flash[:success] = "Added to your cart"
+        flash[:success] = "Added to your Purchase"
       else
-        flash[:error] = "Could not add item to cart"
+        flash[:error] = "Could not add item to Purchase"
       end
     end
 
@@ -31,14 +28,14 @@ class PurchaseItemsController < ApplicationController
 
     if existing_item
       existing_item.increment!(:quantity)
-      flash[:success] = "Increased quantity in your cart"
+      flash[:success] = "Increased quantity in your Purchase"
     else
       @purchase_item = @purchase.purchase_items.new(asset_id: asset_id, quantity: 1)
       if @purchase.save && @purchase_item.save
         session[:purchase_id] = @purchase.id
-        flash[:success] = "Added to your cart"
+        flash[:success] = "Added to your Purchase"
       else
-        flash[:error] = "Could not add item to cart"
+        flash[:error] = "Could not add item to Purchase"
       end
     end
 
@@ -49,7 +46,7 @@ class PurchaseItemsController < ApplicationController
     item = @purchase.purchase_items.find_by(asset_id: params[:id])
     if item
       item.destroy
-      flash[:success] = "Item removed from your cart"
+      flash[:success] = "Item removed from your Purchase"
     else
       flash[:alert] = "Item not found"
     end

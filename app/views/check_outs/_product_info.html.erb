@@ -1,15 +1,16 @@
-<%@purchase_items = @purchase.purchase_items %>
-<div class="col-6 bg-none pb-4 pt-2 animate__animated animate__fadeInRight">
-    <h4 class="m-0 font-italic text-orange border-bottom p-3">YOUR ORDER</h4>
-    <div class="product p-3 border-bottom">
+<% purchase_items = purchase.purchase_items %>
+<% total_price = total_price(purchase_items) %>
+<div class="col-6 bg-none border rounded shadow-md">
+    <h4 class="m-0 text-primary text-center p-3">YOUR PURCHASE</h4>
+    <div class="product p-3">
     	<div class="product-items d-flex justify-content-between mb-1">
-	        <h6 class="m-0 text-secondary font-italic">Product's Names</h6>
-	        <p class="m-0 font-italic">Quantity</p>
-	        <p class="m-0 font-italic">Price</p>
+	        <h6 class="m-0 text-dark">Asset's Names</h6>
+	        <p class="m-0  text-dark">Quantity</p>
+	        <p class="m-0  text-dark">Price</p>
 	    </div>
     	<% purchase_items.each do |item|%>
-	        <div class="product-items d-flex justify-content-between mb-1">
-	            <h6 class="m-0 text-secondary font-italic"><%= item.asset.title%></h6>
+	        <div class="d-flex justify-content-between mb-1">
+	            <h6 class="m-0 text-secondary"><%= item.asset.title%></h6>
 	            <p class="m-0 font-italic"><%=item.quantity%></p>
 	            <p class="m-0 font-italic"><%=number_with_delimiter(item.asset.price) %> VND</p>
 	        </div>
@@ -19,12 +20,8 @@
         <h6 class="m-0 text-secondary font-italic">SUBTOTAL</h6>
         <p class="m-0 font-italic"><%= number_with_delimiter(total_price)%> VND</p>
     </div>
-    <div class="shipping d-flex justify-content-between align-items-center p-3 border-bottom">
-        <h6 class="m-0 text-secondary font-italic">SHIPPING</h6>
-        <p class="m-0 font-italic">50000</p>
-    </div>
     <div class="total d-flex justify-content-between align-items-center p-3 border-bottom">
         <h6 class="m-0 text-secondary font-italic">TOTAL</h6>
-        <p class="m-0 font-italic"><%= number_with_delimiter(total_price + 50000)%> VND</p>
+        <p class="m-0 font-italic"><%= number_with_delimiter(total_price)%> VND</p>
     </div>
 </div>

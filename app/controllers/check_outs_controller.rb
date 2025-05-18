@@ -1,14 +1,13 @@
 class CheckOutsController < ApplicationController
-  before_action :authenticate_user!, :load_purchase
+  before_action :authenticate_user!, :load_purchase, :require_customer!
   def index
   end
 
   def update
-    binding.pry
     if @purchase.update(payable: true)
-      flash[:success] = "Your are checked. Check your mail please "
-      redirect_to root_path
-      session[:purchase] = nil
+      session[:purchase_id] = nil
+      flash[:success] = "Your are payed. Check your mail please"
+      redirect_to customer_purchases_path
     else
       flash[:now] = "checked fails"
       render :index
@@ -21,7 +20,7 @@ class CheckOutsController < ApplicationController
     @purchase = session[:purchase_id].nil? ? Purchase.new : Purchase.find(session[:purchase_id])
     return if @purchase
 
-    flash[:danger] = "Your Cart is empty !"
+    flash[:danger] = "Your Purchase is empty !"
     redirect_to purchase_items_path
   end
 

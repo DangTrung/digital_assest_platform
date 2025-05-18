@@ -1,13 +1,13 @@
-<div class="container cart-total">
+<div class="container Purchase-total">
   <div class="row justify-content-end mb-5">
     <div class="col-md-5 card pb-4 pt-2 animate__animated animate__fadeInUp">
-      <h4 class="m-0 font-weight-bold text-secondary border-bottom p-3">Cart Summary</h4>
+      <h4 class="m-0 font-weight-bold text-secondary border-bottom p-3">Purchase Summary</h4>
 
       <!-- Subtotal -->
       <div class="total d-flex justify-content-between align-items-center p-3 border-bottom">
         <h5 class="m-0 text-secondary font-weight-bold">Subtotal</h5>
         <h5 class="m-0 text-success font-weight-bold">
-          $<%= number_with_precision(total_price, precision: 2, delimiter: ',') %>
+          $<%= number_with_precision(total_price(purchase_items), precision: 2, delimiter: ',') %>
         </h5>
       </div>
 
@@ -21,7 +21,7 @@
       <div class="total d-flex justify-content-between align-items-center p-3 border-bottom">
         <h5 class="m-0 text-secondary font-weight-bold">Total</h5>
         <h5 class="m-0 text-success font-weight-bold">
-          $<%= number_with_precision(total_price, precision: 2, delimiter: ',') %>
+          $<%= number_with_precision(total_price(purchase_items), precision: 2, delimiter: ',') %>
         </h5>
       </div>
 

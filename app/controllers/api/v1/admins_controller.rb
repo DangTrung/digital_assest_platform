@@ -2,31 +2,43 @@
 module Api
     module V1
       class AdminsController < ApplicationController
-        # Ensure only admins can access this API
+        before_action :authenticate_user!
         before_action :authenticate_admin!
   
-        # Endpoint to list all creators and their total earnings
         def creators_earnings
-          # Fetch all users who are creators (assuming a creator is a type of user)
-          creators = User.creator
-  
-          # Create an array of creators with their total earnings
-          creators_earnings = creators.map do |creator|
-            total_earnings = creator.assets.sum(:price) # Sum of all asset prices for the creator
+          creators_earnings = creators_earnings_data.map do |row|
             {
-              creator_id: creator.id,
-              name: creator.name,
-              total_earnings: total_earnings
+              creator_id: row[0],
+              total_earnings: row[1]
             }
           end
   
-          # Respond with JSON
           render json: creators_earnings
         end
   
         private
+
+        def creators_earnings_data
+          ActiveRecord::Base.connection.execute(
+            <<~SQL.squish,
+              select
+                u.id,
+                sum(a.price * pi.quantity) as total_earnings
+              from
+                purchases p
+                join purchase_items pi on p.id = pi.purchase_id
+                join assets a on pi.asset_id = a.id
+                join users u on a.user_id = u.id
+              where
+                u.role = 1
+              group by
+                u.id
+              order by
+                u.id
+            SQL
+            ).values
+        end
   
-        # Authenticate that the user is an admin
         def authenticate_admin!
           unless current_user&.admin?
             render json: { error: 'Unauthorized' }, status: :unauthorized

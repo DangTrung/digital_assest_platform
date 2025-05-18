@@ -12,9 +12,14 @@ Rails.application.routes.draw do
     end
   end
   namespace :customer do
-    # Custom route for customer to view assets
-    resources :assets, only: [:index]  # Or you can add show, create, etc.
+    resources :assets, only: [:index, :show]
+    resources :purchases, only: [:index, :show]
   end
+
+  namespace :admin do
+    resources :dash_boards, only: [:index]
+  end
+
   resources :purchase_items, only: [:create, :destroy, :show] do
     collection do
       post :quick_add

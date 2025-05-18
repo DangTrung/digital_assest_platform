@@ -2,5 +2,5 @@
     <%=render 'empty_item'%>
 <%else%>
     <%=render 'item'%>
-    <%=render 'total_item'%>
+    <%=render 'total_item', purchase_items: @purchase_items%>
 <%end%>

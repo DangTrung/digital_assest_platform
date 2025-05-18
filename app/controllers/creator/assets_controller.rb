@@ -1,6 +1,7 @@
 class Creator::AssetsController < ApplicationController
     before_action :authenticate_user!  # Ensure the user is signed in
     before_action :set_asset, only: [:show, :edit, :update, :destroy]
+    before_action :require_creator!
     
     # Show only the assets of the current user
     def index
@@ -46,7 +47,7 @@ class Creator::AssetsController < ApplicationController
     def set_asset
       @asset = current_user.assets.find(params[:id])  # Ensure the asset belongs to the current user
     end
-  
+
     def asset_params
       params.require(:asset).permit(:title, :description, :price, :file_url)
     end

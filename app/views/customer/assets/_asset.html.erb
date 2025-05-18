@@ -1,0 +1,12 @@
+<div class="container d-flex justify-content-center">
+  <div class="card shadow-lg p-4" style="max-width: 600px; width: 100%;">
+    <p><strong>Title:</strong> <%= asset.title %></p>
+    <p><strong>Description:</strong> <%= asset.description %></p>
+    <p><strong>Price:</strong> <%= asset.price %></p>
+    <% if asset.file_url.present? %>
+      <p><strong>File URL:</strong> <%= link_to asset.file_url, asset.file_url, target: "_blank", class: 'text-primary' %></p>
+    <% else %>
+      <p><strong>File URL:</strong> Not available</p>
+    <% end %>
+  </div>
+</div>

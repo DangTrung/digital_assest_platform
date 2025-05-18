@@ -1,5 +1,5 @@
-<div class="col-md-6 mb-4 animate__animated animate__fadeInLeft">
-  <h4 class="fw-semibold text-orange border-bottom pb-3">Order Information</h4>
+<div class="col-md-6 mb-4">
+  <h4 class="text-orange border-bottom pb-3 text-secondary text-center">Purchase's Information</h4>
 
   <%= form_for(:orders, url: check_out_path(@purchase.id), html: { class: 'info' }, method: :put) do |f| %>
     <%= render 'devise/shared/error_messages', resource: @purchase %>

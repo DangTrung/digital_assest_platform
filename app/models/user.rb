@@ -7,8 +7,8 @@ class User < ApplicationRecord
 
   enum :role, { admin: 0, creator: 1, customer: 2 }
 
-  has_many :assets   
-  has_many :purchases
+  has_many :assets, dependent: :destroy
+  has_many :purchases, dependent: :destroy
   has_many :purchase_items, through: :purchases
 
   validates :email,
