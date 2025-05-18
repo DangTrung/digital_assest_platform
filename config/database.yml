@@ -81,8 +81,5 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: &primary_production
     <<: *default
-    database: digital_assest_platform_production
-    username: digital_assest_platform
-    password: <%= ENV["DIGITAL_ASSEST_PLATFORM_DATABASE_PASSWORD"] %>
+    url: <%= ENV['DATABASE_URL'] %>
